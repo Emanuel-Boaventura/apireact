@@ -15,24 +15,21 @@ export default function (state = initialState, action) {
       newState.isLoggedIn = true;
       newState.token = action.payload.token;
       newState.user = action.payload.user;
+      newState.isLoading = false;
       return newState;
     }
 
     case types.LOGIN_FAILURE: {
-      console.log('Failure');
       const newState = { ...initialState };
       return newState;
     }
-    /*
 
-    case types.BOTAO_CLICADO_SUCCESS: {
+    case types.LOGIN_REQUEST: {
       const newState = { ...state };
-      newState.botaoClicado = !newState.botaoClicado;
-      console.log('Success');
+      newState.isLoading = true;
       return newState;
     }
 
-    */
     default:
       return state;
   }
