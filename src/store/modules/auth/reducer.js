@@ -34,7 +34,7 @@ export default function (state = initialState, action) {
 
     case types.REGISTER_REQUEST: {
       const newState = { ...state };
-      newState.isLoading = false;
+      newState.isLoading = true;
       return newState;
     }
 
@@ -54,7 +54,7 @@ export default function (state = initialState, action) {
 
     case types.REGISTER_FAILURE: {
       const newState = { ...state };
-      newState.isLoading = true;
+      newState.isLoading = false;
       return newState;
     }
 
