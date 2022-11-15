@@ -4,10 +4,12 @@ import { isEmail } from 'validator';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Container } from '../../styles/GlobalStyles';
-import { Form } from './styled';
+import { Form, TitleHead } from './styled';
 
 import Loading from '../../components/Loading';
 import * as actions from '../../store/modules/auth/actions';
+import axios from '../../services/axios';
+import history from '../../services/history';
 
 export default function Register() {
   const dispatch = useDispatch();
@@ -52,11 +54,37 @@ export default function Register() {
     dispatch(actions.registerRequest({ nome, email, password, id }));
   }
 
+  async function handleDeleteUser(e) {
+    e.preventDefault();
+    // eslint-disable-next-line no-restricted-globals, no-alert
+    if (!confirm('Deletar a conta? Essa ação não podera ser desfeita')) return;
+
+    try {
+      await axios.delete(`/users`);
+      dispatch(actions.loginFailure());
+      history.push('/');
+      toast.success('Conta deletada com sucesso.');
+    } catch {
+      toast.error('Erro ao deletar a conta...');
+    }
+  }
+
   return (
     <Container>
       <Loading isLoading={isLoading} />
 
-      <h1>{id ? `Edite seus dados` : `Crie sua conta`}</h1>
+      <TitleHead>
+        <h1>{id ? `Edite seus dados` : `Crie sua conta`}</h1>
+
+        {id ? (
+          <button type="submit" onClick={handleDeleteUser}>
+            Deletar conta
+          </button>
+        ) : (
+          ''
+        )}
+      </TitleHead>
+
       <Form onSubmit={handleSubmit}>
         <label htmlFor="nome">
           Nome:

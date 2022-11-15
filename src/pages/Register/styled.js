@@ -29,3 +29,9 @@ export const Form = styled.form`
     }
   }
 `;
+
+export const TitleHead = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
